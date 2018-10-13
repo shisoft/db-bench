@@ -3,7 +3,8 @@ package runner
 type Db interface {
 	Init(f string) error
 	Halt() error
-	Txn(fn func(txn Transaction) error) error
+	Update(fn func(txn Transaction) error) error
+	View(fn func(txn Transaction) error) error
 }
 
 type Transaction interface {

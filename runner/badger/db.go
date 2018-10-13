@@ -21,8 +21,14 @@ func (db Db) Halt() error  {
 	return db.db.Close()
 }
 
-func (db Db) Txn(fn func(txn *Txn) error) error {
+func (db Db) Update(fn func(txn *Txn) error) error {
 	return db.db.Update(func(txn *badger.Txn) error {
+		return fn(&Txn{ txn })
+	})
+}
+
+func (db Db) View(fn func(txn *Txn) error) error {
+	return db.db.View(func(txn *badger.Txn) error {
 		return fn(&Txn{ txn })
 	})
 }
