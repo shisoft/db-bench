@@ -13,6 +13,6 @@ type Transaction interface {
 	Read(key []byte) ([]byte, error)
 
 
-	Seek(key []byte) (interface{}, error)
+	Seek(key []byte) (interface{}, []byte, error)
 	Next(cursor interface{}) ([]byte, error)
 }

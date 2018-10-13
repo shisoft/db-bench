@@ -12,8 +12,8 @@ func (db Db) Init(f string) error {
 	opts := badger.DefaultOptions
 	opts.Dir = f
 	opts.ValueDir = f
-	innerDb, err := badger.Open(opts)
-	db.db = innerDb
+	inner, err := badger.Open(opts)
+	db.db = inner
 	return err
 }
 

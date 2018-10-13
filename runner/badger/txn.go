@@ -24,10 +24,11 @@ func (txn Txn) Read(key []byte) ([]byte, error)  {
 	return item.Value()
 }
 
-func (txn Txn) Seek(key []byte) (interface{}, error) {
+func (txn Txn) Seek(key []byte) (interface{}, []byte, error) {
 	iter := txn.txn.NewIterator(badger.DefaultIteratorOptions)
 	iter.Seek(key)
-	return iter, nil
+	item, err := iter.Item().Value()
+	return iter, item, err
 }
 
 func (txn Txn) Next(cursor interface{}) ([]byte, error) {
