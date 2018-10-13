@@ -8,11 +8,7 @@ type Txn struct {
 	txn *badger.Txn
 }
 
-func (txn Txn) Insert(key []byte, val []byte) error {
-	return txn.txn.Set(key, val)
-}
-
-func (txn Txn) Update(key []byte, val []byte) error {
+func (txn Txn) Set(key []byte, val []byte) error {
 	return txn.txn.Set(key, val)
 }
 

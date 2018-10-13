@@ -8,8 +8,7 @@ type Db interface {
 }
 
 type Transaction interface {
-	Insert(key []byte, val []byte) error
-	Update(key []byte, val []byte) error
+	Set(key []byte, val []byte) error
 	Read(key []byte) ([]byte, error)
 
 

@@ -7,16 +7,14 @@ type Txn struct {
 	bucketName []byte
 }
 
-func (txn Txn) Insert(key []byte, val []byte) error  {
-	return txn.Insert(key, val)
+func (txn Txn) Set(key []byte, val []byte) error  {
+	b := txn.txn.Bucket(txn.bucketName)
+	return b.Put(key, val)
 }
 
-func (txn Txn) Update(key []byte, val []byte) error  {
-	return txn.Update(key, val)
-}
-
-func (txn Txn) Read(key []byte) error {
-	return txn.Read(key)
+func (txn Txn) Read(key []byte) ([]byte, error) {
+	b := txn.txn.Bucket(txn.bucketName)
+	return b.Get(key), nil
 }
 
 func (txn Txn) Seek(key []byte) (interface{}, []byte, error) {
