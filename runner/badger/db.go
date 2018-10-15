@@ -2,6 +2,7 @@ package badger
 
 import (
 	"github.com/dgraph-io/badger"
+	"github.com/shisoft/db-bench/runner"
 )
 
 type Db struct {
@@ -21,13 +22,13 @@ func (db Db) Halt() error  {
 	return db.db.Close()
 }
 
-func (db Db) Update(fn func(txn *Txn) error) error {
+func (db Db) Update(fn func(txn runner.Transaction) error) error {
 	return db.db.Update(func(txn *badger.Txn) error {
 		return fn(&Txn{ txn })
 	})
 }
 
-func (db Db) View(fn func(txn *Txn) error) error {
+func (db Db) View(fn func(txn runner.Transaction) error) error {
 	return db.db.View(func(txn *badger.Txn) error {
 		return fn(&Txn{ txn })
 	})

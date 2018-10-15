@@ -2,6 +2,7 @@ package boltdb
 
 import (
 	"github.com/boltdb/bolt"
+	"github.com/shisoft/db-bench/runner"
 )
 
 type Db struct {
@@ -20,13 +21,13 @@ func (db Db) Halt() error  {
 	return db.db.Close()
 }
 
-func (db Db) View(fn func(txn *Txn) error) error {
+func (db Db) View(fn func(txn runner.Transaction) error) error {
 	return db.db.View(func(tx *bolt.Tx) error {
 		return fn(&Txn{ tx, []byte(defaultBucket) })
 	})
 }
 
-func (db Db) Update(fn func(txn *Txn) error) error {
+func (db Db) Update(fn func(txn runner.Transaction) error) error {
 	return db.db.Update(func(tx *bolt.Tx) error {
 		return fn(&Txn{ tx, []byte(defaultBucket) })
 	})
